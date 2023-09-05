@@ -21,7 +21,7 @@ const AnimalCard = ({ animal }: AnimalProps) => {
       <div
         className={`w-full h-40 bg-gray-300 ${
           imageLoaded ? "hidden" : "block"
-        }`}
+        } animate-pulse`}
       ></div>
       {imageLoaded && (
         <img
