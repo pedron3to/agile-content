@@ -47,7 +47,7 @@ const SearchInput = ({
 
   const closeIconClassName = [
     "absolute top-2.5 w-3 h-3 cursor-pointer",
-    `${isSelected ? "right-6" : "right-3"} `,
+    `${isSelected ? "right-6" : "right-6"} `,
     "z-100",
   ].join(" ");
 
