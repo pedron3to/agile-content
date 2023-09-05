@@ -11,10 +11,12 @@ import React, {
 } from "react";
 import { motion } from "framer-motion";
 import { SearchIcon } from ".";
+import CloseIcon from "../CloseIcon";
 
 export interface SearchInputProps {
   isSelected?: boolean;
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  handleClearInput?: () => void;
   onEnter?: () => void;
   setIsSelected?: Dispatch<SetStateAction<boolean>>;
   value: string;
@@ -23,12 +25,16 @@ export interface SearchInputProps {
 const SearchInput = ({
   isSelected = false,
   onChange,
+  handleClearInput,
   onEnter,
   setIsSelected = () => {},
   value,
 }: SearchInputProps) => {
-  const inputClassName = [
-    "w-full pl-10 pr-4 py-2 border border-gray-300",
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
+  const focusedContainerClassName = [
+    "w-full px-10 border relative shadow-md",
+    isInputFocused ? "border-blue-500 border-2" : "border-gray-300",
     "rounded-full focus:outline-none focus:ring-2",
     " focus:ring-blue-500 focus:border-blue-500",
     `${isSelected && "scale-120 w-[500px]"}`,
@@ -36,16 +42,14 @@ const SearchInput = ({
 
   const searchIconClassName = [
     "absolute top-3 ",
-    `${
-      isSelected
-        ? "-left-4 md:-left-4 lg:-left-14 xl:-left-14 2xl:-left-24"
-        : "left-3"
-    } `,
+    `${isSelected ? "left-4" : "left-3"} `,
   ].join(" ");
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  const [isInputFocused, setIsInputFocused] = useState(false);
+  const closeIconClassName = [
+    "absolute top-2 w-5 h-5 cursor-pointer",
+    `${isSelected ? "right-4" : "right-3"} `,
+    "z-100",
+  ].join(" ");
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent<HTMLInputElement>) => {
@@ -62,43 +66,22 @@ const SearchInput = ({
     setIsInputFocused(true);
   }, [setIsSelected, setIsInputFocused]);
 
-  const handleClickOutside = useCallback(
-    (event: MouseEvent) => {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(event.target as Node) &&
-        event.target !== document.querySelector("#search-button")
-      ) {
-        setIsSelected(false);
-      }
-    },
-    [inputRef, setIsSelected]
-  );
-
-  useEffect(() => {
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setIsSelected, handleClickOutside]);
+  const handleInputBlur = useCallback(() => {
+    setIsInputFocused(false);
+  }, [setIsInputFocused]);
 
   return (
-    <div className="relative flex flex-col items-center">
+    <div className={focusedContainerClassName}>
       <motion.input
         id="Search"
         type="search"
-        ref={inputRef}
         value={value}
-        placeholder="Search for animals..."
+        placeholder="Search..."
         onFocus={handleInputFocus}
-        onBlur={() => {
-          if (!isInputFocused) {
-            setIsSelected(false);
-          }
-        }}
+        onBlur={handleInputBlur}
         onChange={onChange}
         onKeyDown={handleKeyDown}
-        className={inputClassName}
+        className="w-full px-4 py-2  focus:outline-none"
       />
       <motion.div
         id="search-icon"
@@ -107,6 +90,16 @@ const SearchInput = ({
       >
         <SearchIcon />
       </motion.div>
+
+      {value && (
+        <motion.div
+          className={closeIconClassName}
+          animate={{ scale: isSelected ? 1.2 : 1 }}
+          onClick={handleClearInput}
+        >
+          <CloseIcon color="gray" />
+        </motion.div>
+      )}
     </div>
   );
 };

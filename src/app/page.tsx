@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -30,17 +30,18 @@ const Home = () => {
     dispatch(setValue(debouncedValue));
   }, [debouncedValue, dispatch]);
 
-  const buttonClassName = [
-    "bg-gray-300 rounded-sm p-2 hover:bg-gray-400 hover:text-gray-100 text-gray-500",
-    isSelected ? "mt-6 scale-120" : "mt-4",
-  ].join(" ");
-
   const handleInputChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
     },
     []
   );
+
+  const handleClearInput = useCallback(() => {
+    dispatch(setValue(""));
+    setSearchValue("");
+    setIsSelected(false);
+  }, [dispatch]);
 
   const handleOnEnter = useCallback(() => {
     router.push("/search");
@@ -50,6 +51,13 @@ const Home = () => {
     if (!isSelected && typeof window !== "undefined") {
       window.scrollTo(0, 0);
     }
+  }, [isSelected]);
+
+  const buttonClassName = useMemo(() => {
+    return [
+      "bg-gray-300 rounded-sm py-2 px-8 hover:bg-gray-400 hover:text-gray-100 text-gray-500",
+      isSelected ? "mt-6 scale-120" : "mt-4",
+    ].join(" ");
   }, [isSelected]);
 
   return (
@@ -65,13 +73,14 @@ const Home = () => {
           width={isMobile ? 200 : 272}
           height={isMobile ? 67 : 92}
         />
-        <div className="w-3/4 md:w-2/4">
+        <div className="w-3/4 md:w-2/4 max-w-screen-sm mx-auto">
           <SearchInput
             setIsSelected={setIsSelected}
             isSelected={isSelected}
             onChange={handleInputChange}
             value={searchValue}
             onEnter={handleOnEnter}
+            handleClearInput={handleClearInput}
           />
         </div>
 
