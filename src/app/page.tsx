@@ -42,10 +42,16 @@ const Home = () => {
     router.push("/search");
   }, [router]);
 
+  useEffect(() => {
+    if (!isSelected && typeof window !== "undefined") {
+      window.scrollTo(0, 0);
+    }
+  }, [isSelected]);
+
   return (
     <Layout isSelected={isSelected} isHomePage={true}>
       <motion.div
-        className="flex flex-col items-center justify-center mt-60"
+        className="flex flex-col items-center justify-center flex-grow mt-40 md:mt-60"
         whileFocus={{ scale: 1.2 }}
       >
         <Image
