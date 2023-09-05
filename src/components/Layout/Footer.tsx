@@ -5,7 +5,7 @@ const Footer = ({ isSelected }: { isSelected?: boolean }) => {
 
   return (
     <motion.footer
-      className={`${containerClasses} py-6 px-4 bg-gray-100`}
+      className={`${containerClasses} h-14 px-4 bg-gray-100`}
       animate={{ opacity: isSelected ? 0 : 1 }}
       transition={{ duration: 0.3 }}
     >

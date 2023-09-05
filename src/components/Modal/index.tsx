@@ -1,5 +1,7 @@
+import dynamic from "next/dynamic";
 import React, { ReactNode, useCallback, useState } from "react";
-import CloseIcon from "../CloseIcon";
+
+const CloseIcon = dynamic(() => import("../CloseIcon"));
 
 interface ModalProps {
   isOpen: boolean;

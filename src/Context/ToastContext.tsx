@@ -1,6 +1,8 @@
 "use client";
 import React, { ReactNode, useCallback, useState } from "react";
-import Toast from "@/components/Toast";
+import dynamic from "next/dynamic";
+
+const Toast = dynamic(() => import("@/components/Toast"));
 
 export const ToastContext = React.createContext({
   showToast: (message: string) => {},

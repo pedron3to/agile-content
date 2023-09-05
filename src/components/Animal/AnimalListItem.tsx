@@ -20,7 +20,7 @@ const AnimalListItem = memo(({ animal }: AnimalListItemProps) => {
   return (
     <div className="mt-6" onClick={handleOpenAnimalCard}>
       <p className="text-gray-500 text-sm">{animal.url}</p>
-      <div className={titleClassName}>{animal.title}</div>
+      <p className={titleClassName}>{animal.title}</p>
       <p className="text-gray-600 text-md">{animal.description}</p>
     </div>
   );

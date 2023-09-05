@@ -10,7 +10,7 @@ import React, {
   useCallback,
 } from "react";
 import { motion } from "framer-motion";
-import SearchIcon from "./SearchIcon";
+import { SearchIcon } from ".";
 
 export interface SearchInputProps {
   isSelected?: boolean;
@@ -36,7 +36,11 @@ const SearchInput = ({
 
   const searchIconClassName = [
     "absolute top-3 ",
-    `${isSelected ? "-left-2 md:-left-4 lg:-left-14 xl:-left-28" : "left-3"} `,
+    `${
+      isSelected
+        ? "-left-4 md:-left-4 lg:-left-14 xl:-left-14 2xl:-left-24"
+        : "left-3"
+    } `,
   ].join(" ");
 
   const inputRef = useRef<HTMLInputElement>(null);

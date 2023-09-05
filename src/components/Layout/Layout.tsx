@@ -1,6 +1,6 @@
+"use client";
 import React, { ReactNode } from "react";
-import Header from "./Header";
-import Footer from "./Footer";
+import { Footer, Header } from ".";
 
 interface LayoutProps {
   isSelected?: boolean;
@@ -13,15 +13,15 @@ const Layout = ({
   isHomePage = false,
 }: LayoutProps) => {
   return (
-    <div className="min-h-screen flex flex-col">
-      <div>
+    <main className="h-[100vh]  flex flex-col">
+      <div className="flex-grow">
         <Header isSelected={isSelected} isHomePage={isHomePage} />
-        {children}
+        <div>{children}</div>
       </div>
       <div className="mt-auto">
         <Footer isSelected={isSelected} />
       </div>
-    </div>
+    </main>
   );
 };
 

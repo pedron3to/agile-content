@@ -1,5 +1,9 @@
-import AnimalCard from "./AnimalCard";
-import skeletonAnimalListItem from "./skeletonAnimalListItem";
-import AnimalListItem from "./AnimalListItem";
+import dynamic from "next/dynamic";
+
+const AnimalCard = dynamic(() => import("./AnimalCard"));
+const skeletonAnimalListItem = dynamic(
+  () => import("./skeletonAnimalListItem")
+);
+const AnimalListItem = dynamic(() => import("./AnimalListItem"));
 
 export { AnimalCard, skeletonAnimalListItem, AnimalListItem };

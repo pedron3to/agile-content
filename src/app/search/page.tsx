@@ -1,11 +1,18 @@
 "use client";
 import { Animal } from "@/types";
 import { AnimalCard, AnimalListItem } from "@/components/Animal";
-import Layout from "@/components/Layout/Layout";
-import Modal from "@/components/Modal";
-import SkeletonAnimalListItem from "@/components/Animal/skeletonAnimalListItem";
+
 import { useSearchPage } from "@/hooks/useSearchPage";
 import useDeviceType from "@/hooks/useDeviceType";
+import dynamic from "next/dynamic";
+
+const Layout = dynamic(() => import("@/components/Layout/Layout"), {
+  ssr: false,
+});
+const Modal = dynamic(() => import("@/components/Modal"));
+const SkeletonAnimalListItem = dynamic(
+  () => import("@/components/Animal/skeletonAnimalListItem")
+);
 
 const Page = () => {
   const { isLoading, filteredData, search, animal, handleCloseAnimalCard } =

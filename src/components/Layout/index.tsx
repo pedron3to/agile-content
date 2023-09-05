@@ -1,5 +1,7 @@
-import Footer from "./Footer";
-import Header from "./Header";
-import Layout from "./Layout";
+import dynamic from "next/dynamic";
 
-export { Footer, Header };
+const Footer = dynamic(() => import("./Footer"));
+const Header = dynamic(() => import("./Header"));
+const Layout = dynamic(() => import("./Layout"));
+
+export { Footer, Header, Layout };

@@ -6,11 +6,15 @@ import { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
-import Layout from "@/components/Layout/Layout";
-import SearchInput from "@/components/Input/SearchInput";
 import { useDebounce } from "@/hooks/useDebounce";
 import useDeviceType from "@/hooks/useDeviceType";
 import { setValue } from "@/store/slice/search.slice";
+import dynamic from "next/dynamic";
+
+const SearchInput = dynamic(() => import("@/components/Input/SearchInput"));
+const Layout = dynamic(() => import("@/components/Layout/Layout"), {
+  ssr: false,
+});
 
 const Home = () => {
   const router = useRouter();
