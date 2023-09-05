@@ -41,6 +41,12 @@ const Header = ({ isSelected = false, isHomePage = true }: HeaderProps) => {
   const [searchValue, setSearchValue] = useState(search);
   const debouncedValue = useDebounce(searchValue, 2000);
 
+  const handleClearInput = useCallback(() => {
+    dispatch(resetAnimal());
+    dispatch(setValue(""));
+    setSearchValue("");
+  }, [dispatch]);
+
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
       setSearchValue(event.target.value);
@@ -61,7 +67,7 @@ const Header = ({ isSelected = false, isHomePage = true }: HeaderProps) => {
       transition={{ duration: 0.3 }}
     >
       {isHomePage ? (
-        <div>
+        <div className="py-4">
           <span className="font-semibold">Agile Content </span>
           <span>FrontEnd test</span>
         </div>
@@ -78,7 +84,11 @@ const Header = ({ isSelected = false, isHomePage = true }: HeaderProps) => {
           </Link>
 
           <div className="w-full md:w-1/3">
-            <SearchInput value={searchValue} onChange={handleChange} />
+            <SearchInput
+              value={searchValue}
+              onChange={handleChange}
+              handleClearInput={handleClearInput}
+            />
           </div>
         </div>
       )}
