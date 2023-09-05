@@ -24,7 +24,7 @@ const Modal = ({ isOpen, onClose, children }: ModalProps) => {
               className="absolute top-8 right-8 text-white hover:text-gray-700"
               onClick={closeModal}
             >
-              <CloseIcon />
+              <CloseIcon color="white" />
             </button>
             {children}
           </div>
